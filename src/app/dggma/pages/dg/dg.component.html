@@ -1,0 +1,334 @@
+
+  <!--TODO: CARRUSEL -->
+
+  <div id="myCarousel" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+        aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <!--! INEGI CARRUSEL -->
+      <div class="carousel-item active" data-duration="6000">
+        <video loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true"
+          style="width: 100%; height: 100%; object-fit: cover;">
+          <source
+            src="https://cdn.hubblecontent.osi.office.net/videos/publish/01d87b62-62fc-488b-8880-2d4d8674a18f/1170533217.mp4"
+            type="video/mp4">
+        </video>
+        <div class="container">
+          <div class="carousel-caption text-end">
+
+            <img class="imagenCarouselINEGI" focusable="false" src="./assets/inegilogowhite.png" alt="Mi SVG"
+              style="max-width: 350px; height: auto;  margin: 0 auto;">
+            <h2 style="color: white; font-family: Helvetica, Sans-Serif;">Productos detectados en las direcciones generales.</h2>
+            <p style="color: white; font-family: Helvetica, Sans-Serif;">Descubre los productos detectados y catalogados por direcciones generales.
+            </p>
+            <button class="btn btn-lg custom-btn-colorWhite" [routerLink]="['/dg/products']" href="#">Ver más</button>
+          </div>
+        </div>
+      </div>
+
+      <!--! MDEA CARRUSEL -->
+      <div class="carousel-item" style="background-color: #e6e6e6;" data-duration="6000">
+
+        <video loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true"
+          style="width: 100%; height: 100%; object-fit: cover;">
+          <source src="./assets/mdea.mp4" type="video/mp4">
+        </video>
+
+
+        <div class="container">
+          <div id="mdeatext" class="carousel-caption text-center" >
+            <h2 style="color: #dff9ff; font-family: Helvetica, Sans-Serif;" >Relación con el Marco para el Desarrollo de las Estadísticas Ambientales.</h2>
+            <p style="color: #dff9ff; font-family: Helvetica, Sans-Serif;">Explora para saber más.</p>
+            <button class="btn btn-lg custom-btn-color" [routerLink]="['/dg/mdea']" href="#">Ver más</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!--! ods -->
+
+      <div class="carousel-item" style="background-color: white; border-bottom: 1px solid #009edb;" data-duration="6000">
+
+        <video loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true"
+          style="width: 100%; height: 100%; object-fit: cover;">
+          <source src="https://sdgintegration.undp.org/video/29062020/SDGi-Low.mp4" type="video/mp4">
+        </video>
+
+        <div class="carousel-caption">
+
+          <img class="imagenCarouselODS" style="margin-top: -21rem; margin-right: -28rem;"
+            src="https://www.un.org/sustainabledevelopment/wp-content/uploads/sites/3/2020/05/SDG_website_banner_S_100px.png"
+            srcset="https://www.un.org/sustainabledevelopment/wp-content/uploads/sites/3/2020/05/SDG_website_banner_S_100px.png 1x, https://www.un.org/sustainabledevelopment/wp-content/uploads/sites/3/2020/05/SDG_website_banner_S.png 2x"
+            alt="Desarrollo Sostenible Logo"
+            data-retina_logo_url="https://www.un.org/sustainabledevelopment/wp-content/uploads/sites/3/2020/05/SDG_website_banner_S.png">
+        </div>
+
+        <div class="carousel-caption text-end" >
+          <h2 style="color: #009edb; font-family: Helvetica, Sans-Serif;">Relación con los Objetivos de Desarrollo Sostenible.
+          </h2>
+          <p style="color: #009edb; font-family: Helvetica, Sans-Serif;">Explora para saber más.</p>
+          <button class="btn btn-lg custom-btn-color2" [routerLink]="['/dg/ods']" href="#">Ver más</button>
+        </div>
+      </div>
+
+
+
+      <!--! SNIEG -->
+      <div class="carousel-item" style="background-color: #e1e3e6;" data-duration="6000">
+
+        <video loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true"
+          style="width: 100%; height: 100%; object-fit: cover;">
+          <source src="./assets/clipE.mp4" type="video/mp4">
+        </video>
+
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <img class="imagenCarouselSNIEG" focusable="false" src="./assets/snieg2.png" alt="Mi SVG"
+              style="max-width: 500px; height: auto;  margin: 0 auto;">
+            <h2 style="color: #ffffff; font-family: Helvetica, Sans-Serif;">Indicadores ambientales detectados en el Catálogo Nacional de Indicadores.</h2>
+            <p style="color: #ffffff; font-family: Helvetica, Sans-Serif; ">Descubre más sobre indicadores ambientales producidos en el INEGI.</p>
+            <button class="btn btn-lg custom-btn-colorGris" [routerLink]="['/dg/indicadores']" href="#">Ver más</button>
+          </div>
+        </div>
+      </div>
+      <!--! geoNode -->
+      <div class="carousel-item" style="background-color: #e1e3e6;" data-duration="6000">
+
+        <video loop muted autoplay oncanplay="this.play()" onloadedmetadata="this.muted = true"
+          style="width: 110%; height: 100%; object-fit: cover;">
+          <source src="./assets/geo_video.mp4" type="video/mp4">
+        </video>
+
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <img class="imagenCarouselGeonode" focusable="false" src="./assets/inegixgeonode2.png" alt="Mi SVG"
+            style="max-width: 200px; height: auto; filter: invert(100%) contrast(150%);">
+            <h2 style="color: #ffffff; font-family: Helvetica, Sans-Serif;">Inventario geográfico.</h2>
+            <p style="color: #ffffff; font-family: Helvetica, Sans-Serif;">Explora y despliega las capas de tipo geográfico del INEGI.</p>
+            <button class="btn btn-lg custom-btn-colorWhite" onclick="window.location.href='http://10.200.31.73:9701/#/'">Ver más</button>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+    <!--! START THE FEATURETTES -->
+
+  <div class="container marketing">
+
+
+
+    <div class="row">
+      <div class="col">
+        <h1 class="display-6 TituloTemas">Temas de actualidad</h1>
+      </div>
+    </div>
+    <div class="row" style=" margin-bottom: 10rem; background-color: #eef5f8; ">
+
+
+      <div class="col-4" style="border-right: solid 15px; border-color: #ffffff;">
+        <div class="row">
+          <div class="col-12" [ngClass]="{'selected': !isINEGISelected}" (click)="setSelection(1)"
+            style="cursor: pointer; border-bottom: solid 3px; border-color: #ffffff; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+            <h4 class="TituloApartado" style="font-family: Helvetica, Sans-Serif;">
+              Productos detectados en las direcciones generales.
+            </h4>
+          </div>
+          <div class="col-12" [ngClass]="{'selected': !isMDEASelected}" (click)="setSelection(2)"
+            style="cursor: pointer; border-bottom: solid 3px; border-color: #ffffff; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+            <h4 class="TituloApartado"  style="font-family: Helvetica, Sans-Serif;">
+              Marco para el Desarrollo de las Estadísticas Ambientales.
+            </h4>
+          </div>
+          <div class="col-12" [ngClass]="{'selected': !isODSSelected}" (click)="setSelection(3)"
+            style="cursor: pointer; border-bottom: solid 3px; border-color: #ffffff; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+            <h4 class="TituloApartado"  style="font-family: Helvetica, Sans-Serif;">
+              Objetivos de Desarrollo Sostenible.
+            </h4>
+          </div>
+          <div class="col-12" [ngClass]="{'selected': !isINDSelected}" (click)="setSelection(4)"
+            style="cursor: pointer; border-bottom: solid 3px; border-color: #ffffff; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+            <h4 class="TituloApartado"  style="font-family: Helvetica, Sans-Serif;">
+              Indicadores.
+            </h4>
+          </div>
+
+          <div class="col-12" [ngClass]="{'selected': !isGeoNodeSelected}" (click)="setSelection(5)"
+            style="cursor: pointer; border-bottom: solid 3px; border-color: #ffffff; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+            <h4 class="TituloApartado" style="font-family: Helvetica, Sans-Serif;">
+              Inventario geográfico del INEGI.
+            </h4>
+          </div>
+        </div>
+      </div>
+
+
+      <!--! INEGI -->
+      <div class="col-8" >
+
+        <div [hidden]="isINEGISelected" class="row" >
+          <div class="col-12 p-0 m-0 recuadroInegi" style=" background-color: #113250;">
+            <img class="imgInegi" focusable="false" src="./assets/inegilogowhite.png" alt="Mi SVG">
+          </div>
+          <div class="col-12">
+
+
+            <div style="margin: 2rem; margin-bottom: 5rem;">
+              <h2 class="SubtituloParrafo" style="color: #036baa; font-family: Helvetica, Sans-Serif;">Productos detectados en las direcciones generales.</h2>
+              <p class="lead customParrafo">
+                En el presente portal, se ha logrado un hito importante al detectar y asignar la mayoría de los productos publicados por
+                el INEGI, llevando a cabo una integración profunda, vinculando cada uno de estos productos con actividades estadísticas
+                geográficas, programas de información y programas sectoriales. En este proceso, se han asignado posibles variables que
+                enriquecen la información de cada producto.
+              </p>
+              <p class="lead customParrafo">
+                Así también, se ha reforzado la alineación con estándares nacionales e internacionales, tales como el Marco para el
+                Desarrollo de las Estadísticas Ambientales (MDEA) y los Objetivos de Desarrollo Sostenible (ODS). Estas conexiones
+                estratégicas, permiten una gestión más eficiente y una comprensión más profunda de la información estadística.
+              </p>
+              <p class="lead customParrafo">
+                Bienvenido a un mundo de datos en constante evolución, donde la integración y la visión integral son la prioridad.
+                ¡Explora y descubre cómo esta plataforma transforma la manera en que comprendemos y utilizamos los datos estadísticos!".
+              </p>
+              <p class="lead customParrafo">
+                En este apartado, podrás consultar la disponibilidad de productos publicados por el INEGI mediante filtros que van desde
+                lo general hasta lo particular, permitiendo localizar productos acordes a las necesidades individuales de cada usuario.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!--! MDEA  -->
+        <div [hidden]="isMDEASelected" class="row" >
+          <div class="col-12 " style=" background-color: #e6e6e6; margin-left: 0px;">
+            <img class="imgMdea" focusable="false" src="./assets/mdea.png" alt="Mi SVG">
+          </div>
+          <div class="col-12 mt-2">
+            <div style="margin: 2rem; margin-bottom: 5rem;">
+              <h2 class="SubtituloParrafo" style="color: #036baa; font-family: Helvetica, Sans-Serif;">Marco para el Desarrollo de las Estadísticas Ambientales.</h2>
+              <p class="lead customParrafo">
+                El MDEA organiza las estadísticas ambientales en seis componentes, cada uno desagregado en subcomponentes y en tópicos
+                estadísticos.
+              </p>
+              <p class="lead customParrafo">
+                Los temas estadísticos representan los aspectos cuantificables de los componentes y están agrupados en subcomponentes,
+                tomando en cuenta los tipos y fuentes de las estadísticas necesarias para describirlos.
+              </p>
+              <p class="lead customParrafo">
+                En este apartado podrás visualizar gráficamente por componente, los productos del INEGI que se apegan a los estándares
+                estipulados en el MDEA, de modo que sea posible identificar aquellos temas de mayor cobertura en nuestro país y cuáles
+                hace falta reforzar.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!--! ODS -->
+        <div [hidden]="isODSSelected" class="row" >
+          <div class="col-12" style=" background-color: #113250;">
+            <img class="imgOds" focusable="false" src="./assets/logoODS_es.png" alt="Mi SVG">
+          </div>
+          <div class="col-12 m-2">
+            <div style="margin: 2rem; margin-bottom: 5rem;">
+              <h2 class="SubtituloParrafo" style="color: #036baa; font-family: Helvetica, Sans-Serif;">Objetivos de Desarrollo Sostenible.</h2>
+              <p class="lead customParrafo">
+                Los Objetivos de Desarrollo Sostenible (ODS), fueron adoptados por las Naciones Unidas en 2015 como un llamado global
+                para velar y garantizar que para el 2030 toda la población disfrute de un futuro fundamentado en la sostenibilidad. Para
+                ello, se establecieron 17 objetivos con sus respectivas metas, mismas que permitirán el logro de estos.
+              </p>
+              <p class="lead customParrafo">
+                En este apartado puedes visualizar la cantidad de productos del INEGI que guardan relación con los objetivos y las metas
+                ODS.
+              </p>
+            </div>
+          </div>
+        </div>
+         <!--! indicadores -->
+         <div [hidden]="isINDSelected"  class="row" >
+          <div class="col-12" style="  background-color: #ffffff;">
+            <img class="imgSnieg" focusable="false" src="./assets/snieg.png" alt="Mi SVG">
+          </div>
+
+          <div class="col-12 m-2">
+            <div style="margin: 2rem; margin-bottom: 5rem;">
+              <h2 class="SubtituloParrafo" style="color: #036baa; font-family: Helvetica, Sans-Serif;">Indicadores generados en INEGI.</h2>
+              <p class="lead customParrafo">
+                Los indicadores ambientales son una forma de estadística derivada, que en el INEGI, se rige por el mandato legal
+                descrito en el artículo 27 de la Ley del SNIEG, el cual señala que el Subsistema Nacional de Información Geográfica,
+                Medio Ambiente y Ordenamiento Territorial y Urbano (SNIGMAOTU) en su componente del medio ambiente, procurará describir
+                el estado y las tendencias del medio ambiente, a través de la generación de indicadores con temáticas relacionadas.
+              </p>
+
+              <p class="lead customParrafo">
+                Una de las labores de la DGGMA es realizar la exploración, análisis e integración de información estadística y
+                geográfica generada en el instituto en materia ambiental. Esto, para construir, implementar y actualizar indicadores
+                ambientales de Interés Nacional mediante un enfoque colaborativo, buscando así suministrar información de calidad,
+                pertinente, veraz y oportuna que coadyuve al desarrollo nacional.
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- GeoNode -->
+
+        <div [hidden]="isGeoNodeSelected" class="row">
+          <div class="col-12" style="  background-color: #113250;">
+            <img class="imgGeonode" focusable="false" src="./assets/inegixgeonode.png" alt="Mi SVG">
+          </div>
+
+          <div class="col-12 m-2">
+            <div style="margin: 2rem; margin-bottom: 5rem;">
+              <h2 class="SubtituloParrafo" style="color: #036baa; font-family: Helvetica, Sans-Serif;" >Inventario geográfico del INEGI.</h2>
+              <p class="lead customParrafo">
+                Existen diversas opciones en cuanto a plataformas para implementar una IDE; sin embargo, se considera que GeoNode
+                es una
+                de las más potentes. GeoNode es una plataforma de código abierto que permite la creación, administración y
+                visualización
+                de datos geoespaciales. Está diseñado para colaborar y compartir datos geográficos; lo utilizan gobiernos y
+                organizaciones sin fines de lucro para proyectos relacionados con el medio ambiente, la planificación del
+                territorio y
+                otros temas geográficos.
+              </p>
+
+              <p class="lead customParrafo">
+                En este apartado puedes navegar por el Entorno de Desarrollo Integrado (IDE) capaz de desplegar las capas
+                geográficas
+                del INEGI, así como consultar fácilmente la información contenida en dichas capas.
+              </p>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+

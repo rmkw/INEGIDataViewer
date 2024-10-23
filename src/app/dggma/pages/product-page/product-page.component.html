@@ -1,0 +1,1319 @@
+<div class="container-fluid" style="background-color: #f0f0f0;">
+  <div class="row">
+
+    <!--* FILTROS -->
+    <div [hidden]="flagHidden" class="col-3 colorfilter" >
+
+
+      <!--! boton para ocultar todos los filtros y también para reiniciarlos -->
+      <div class="row mt-2">
+        <div class="col">
+          <div class="d-flex justify-content-between mt-2">
+            <div><i class="bi bi-funnel-fill color113250"></i>
+              <strong><label class="color113250">Filtros</label></strong>
+            </div>
+            <div class="d-flex">
+              <button (click)="deleteFilter()" class="btn btn-outline-secondary botonfilter" [disabled]="deleteFilterFlag">Quitar filtros</button>
+              <button type="button" class="btn-close" aria-label="Close" (click)="hiddenFilters()"></button>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+
+
+      <!--! ojito para ocultar filtro de propiedades del producto -->
+      <div class="row ">
+        <div class="col">
+
+          <div class="d-flex justify-content-between ">
+
+            <div>
+              <i class="bi bi-funnel-fill color113250"></i>
+              <strong><span class="color113250">Filtros por propiedades</span></strong></div>
+            <div class="d-flex">
+
+              <button *ngIf="!flagFirtsFilters" (click)="hiddenFirtsFilters()" class="btn hiddenojito">
+                <i class="bi bi-eye-fill color113250" ></i></button>
+
+              <button *ngIf="flagFirtsFilters" (click)="showFirtsFilters()" class="btn hiddenojito">
+                <i class="bi bi-eye-slash color113250"></i></button>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+
+      </div>
+
+      <div class="row" [hidden]="flagFirtsFilters">
+
+        <!--! filtrar por termino -->
+        <div class="col-12" style="margin-bottom: 0.5rem;">
+
+          <form class="d-flex" role="search" (ngSubmit)="funcionParaBuscarByQuery()">
+            <div class="input-group input-group-sm">
+              <input class="form-control me-2" type="search" placeholder="Buscar..." [(ngModel)]="terminoBusqueda"
+                name="query">
+              <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+              <button class="btn btn-outline-danger" (click)="borrarTermino()"><i class="bi bi-trash"></i></button>
+            </div>
+          </form>
+
+        </div>
+        <!--! FILTRO DE GMA  -->
+        <div class="col-12">
+          <hr class="mt-2">
+          <h6 style="color: #113250;">Productos por Dirección General:</h6>
+
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="direGeogrAmbiente"
+              [checked]="checkboxesState['direGeogrAmbiente']" (change)="handleCheckboxChange($event)">
+            <label class="form-check-label" style="font-size: small;" for="direGeogrAmbiente">Geografía y Medio
+              Ambiente</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="direEstaSocio"
+              [checked]="checkboxesState['direEstaSocio']" (change)="handleCheckboxChange($event)">
+            <label class="form-check-label" style="font-size: small;" for="direEstaSocio">Estadísticas
+              Sociodemográficas</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="direEstaEconomicas"
+              [checked]="checkboxesState['direEstaEconomicas']" (change)="handleCheckboxChange($event)">
+            <label class="form-check-label" style="font-size: small;" for="direEstaEconomicas">Estadísticas
+              Económicas</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="direEstaGobSegPubJus"
+              [checked]="checkboxesState['direEstaGobSegPubJus']" (change)="handleCheckboxChange($event)">
+            <label class="form-check-label" style="font-size: small;" for="direEstaGobSegPubJus">Estadísticas de
+              Gobierno, Seguridad Pública y
+              Justicia</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="direInteAnaInv"
+              [checked]="checkboxesState['direInteAnaInv']" (change)="handleCheckboxChange($event)">
+            <label class="form-check-label" style="font-size: small;" for="direInteAnaInv">Integración, Análisis e
+              Investigación</label>
+          </div>
+
+          <hr>
+
+
+        </div>
+
+        <!--! filtrar por tipo de producto -->
+        <div class="col-12">
+          <h6 style="color: #113250;">Productos de tipo:</h6>
+          <div class="row">
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="proGeografico"
+                  value="option1" (change)="handleRadioChange($event)" [checked]="selectedRadioValue === 'option1'">
+                <label class="form-check-label" style="font-size: small;" for="proGeografico">Geográfico</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="proEstadistico"
+                  value="option2" (change)="handleRadioChange($event)" [checked]="selectedRadioValue === 'option2'">
+                <label class="form-check-label" style="font-size: small;" for="proEstadistico">Estadístico</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="proGeografico&proEstadistico"
+                  value="option3" (change)="handleRadioChange($event)" [checked]="selectedRadioValue === 'option3'">
+                <label class="form-check-label" style="font-size: small;" for="proGeografico&proEstadistico">Geográfico
+                  y Estadístico</label>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <!--! filtrar por cobertura -->
+        <div class="col-12">
+          <h6 style=" color: #113250;">Por cobertura geográfica:</h6>
+          <div class="row" id="ChecksCobertura">
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc2">
+              <div class="form-check form-check-inline" style="margin-right: 2rem;">
+                <input class="form-check-input " type="checkbox" value="" id="cobeNacional"
+                  [checked]="checkboxesCobe['cobeNacional']" (change)="handleCheckboxCobe($event)">
+                <label class="form-check-label" style="font-size: small;" for="cobeNacional">Nacional</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="cobeEstatal"
+                  [checked]="checkboxesCobe['cobeEstatal']" (change)="handleCheckboxCobe($event)">
+                <label class="form-check-label" style="font-size: small;" for="cobeEstatal">Estatal</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc2">
+              <div class="form-check form-check-inline" style="margin-right: 1.5rem;">
+                <input class="form-check-input" type="checkbox" value="" id="cobeMunicipal"
+                  [checked]="checkboxesCobe['cobeMunicipal']" (change)="handleCheckboxCobe($event)">
+                <label class="form-check-label" style="font-size: small;" for="cobeMunicipal">Municipal</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-12 colcustomTipoProduc2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="cobRegional"
+                  [checked]="checkboxesCobe['cobRegional']" (change)="handleCheckboxCobe($event)">
+                <label class="form-check-label" style="font-size: small;" for="cobRegional">Regional</label>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+
+        </div>
+
+        <!--! tipo de soporte -->
+        <div class="col-12">
+          <h6 style=" color: #113250;">Tipos de soporte:</h6>
+          <div class="row" id="ChecksSoporte ">
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="typeDatoGeo"
+                  [checked]="checkboxesType['typeDatoGeo']" (change)="handleCheckboxType($event)">
+                <label class="form-check-label" style="font-size: small;" for="typeDatoGeo">Datos Geográficos</label>
+              </div>
+
+            </div>
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="typeTabulado"
+                  [checked]="checkboxesType['typeTabulado']" (change)="handleCheckboxType($event)">
+                <label class="form-check-label" style="font-size: small;" for="typeTabulado">Tabulado</label>
+              </div>
+
+            </div>
+            <div class="col-md-4 col-sm-12 colcustomTipoProduc">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="typePublicacion"
+                  [checked]="checkboxesType['typePublicacion']" (change)="handleCheckboxType($event)">
+                <label class="form-check-label" style="font-size: small;" for="typePublicacion">Publicaciones</label>
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+          <hr>
+        </div>
+
+        <!--! Consultar por años de Publicación -->
+        <div class="col-12">
+          <h6 style=" color: #113250;">Consultar por años de Publicación:</h6>
+          <div class="row mt-1">
+
+            <div class="col-md-6 mt-2 mt-md-0">
+              <div class="row g-2 align-items-center">
+
+                <div class="col-12">
+                  <label for="inputPassword6" style="font-size: small;" class="col-form-label ms-1">Desde:</label>
+                </div>
+
+                <div class="col-12">
+                  <select class="form-select form-select-sm" id="desdePubli" (change)="onChangeDesdePubli($event)">
+                    <option value="0" selected>Selecciona Fecha</option>
+                    <option *ngFor="let item of pU_uniqueYears" [value]="item">{{item}}</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-6 mt-2 mt-md-0">
+              <div class="row g-2 align-items-center">
+                <div class="col-12">
+                  <label for="inputPassword6" style="font-size: small;" class="col-form-label ms-1">Hasta:</label>
+                </div>
+                <div class="col-12">
+                  <select class="form-select form-select-sm" id="hastaPubli" (change)="onChangeHastaPubli($event)">
+                    <option value="0" selected>Selecciona Fecha</option>
+                    <option *ngFor="let item of pU_uniqueYearsHasta" [value]="item">{{item}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <hr>
+        </div>
+
+        <!--! Consultar por años de Referencia -->
+        <div class="col-12">
+          <h6 style=" color: #113250;">Consultar por años de Referencia:</h6>
+          <div class="row mt-1">
+            <div class="col-md-6 mt-2 mt-md-0">
+              <div class="row g-2 align-items-center">
+                <div class="col-12 ">
+                  <label for="inputPassword6" style="font-size: small;" class="col-form-label ms-1">Desde:</label>
+                </div>
+                <div class="col-12 ">
+                  <select class="form-select form-select-sm" id="desdeRefe" (change)="onChangeDesdeRefe($event)">
+                    <option value="0" selected>Selecciona Fecha</option>
+                    <option *ngFor="let item of uniqueYears" [value]="item">{{item}}</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-6 mt-2 mt-md-0">
+              <div class="row g-2 align-items-center">
+                <div class="col-12 ">
+                  <label for="inputPassword6" style="font-size: small;" class="col-form-label ms-1">Hasta:</label>
+                </div>
+                <div class="col-12">
+                  <select class="form-select form-select-sm" id="hastaRefe" (change)="onChangeHastaRefe($event)">
+                    <option value="0" selected>Selecciona Fecha</option>
+                    <option *ngFor="let item of uniqueYearsHasta" [value]="item">{{item}}</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <hr>
+        </div>
+      </div>
+
+      <!--! ojito para ocultar filtros de MDEA -->
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-between">
+            <div class=""><i style="color: #113250;" class="bi bi-funnel-fill"></i><strong>
+                <span style="color: #113250;">Filtros por relación con el MDEA</span></strong>
+            </div>
+            <div class="d-flex">
+
+              <button *ngIf="!flagSegundaFilters" (click)="hiddenSegundaFilters()" class="btn "
+                style=" --bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-right: 0.5rem; border-radius: 50%;"><i
+                  class="bi bi-eye-fill" style="color: #113250;"></i></button>
+
+              <button *ngIf="flagSegundaFilters" (click)="showSegundaFilters()" class="btn "
+                style=" --bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-right: 0.5rem; border-radius: 50%;"><i
+                  class="bi bi-eye-slash" style="color: #113250;"></i></button>
+
+
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12" [hidden]="flagSegundaFilters">
+
+          <div style="margin-top: 1rem;">
+            <p-tree #tree class="custom-padding" [(selection)]="selectedNodesMdea" [value]="treeDataMdea"
+              selectionMode="checkbox" (onNodeSelect)="selectComponente($event)"
+              (onNodeUnselect)="unSelectComponente($event)"></p-tree>
+          </div>
+
+        </div>
+        <div class="col-12">
+          <hr>
+        </div>
+      </div>
+
+      <!--! ojito para ocultar filtros de ODS -->
+      <div class="row">
+        <div class="col-12 ">
+          <div class="d-flex justify-content-between ">
+            <div class=""><i style="color: #113250;" class="bi bi-funnel-fill"></i><strong>
+                <span style="color: #113250;">Filtros por relación con el ODS</span></strong>
+            </div>
+            <div class="d-flex">
+
+              <button *ngIf="!flagTerceroFilters" (click)="hiddenTerceroFilters()" class="btn "
+                style=" --bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-right: 0.5rem;"><i
+                  class="bi bi-eye-fill" style="color: #113250;"></i></button>
+
+              <button *ngIf="flagTerceroFilters" (click)="showTerceroFilters()" class="btn "
+                style=" --bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-right: 0.5rem;"><i
+                  class="bi bi-eye-slash" style="color: #113250;"></i></button>
+
+
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12" [hidden]="flagTerceroFilters">
+
+          <div style="margin-top: 1rem;">
+            <p-tree class="custom-padding" [(selection)]="selectedNodesOds" [value]="treeDataOds"
+              selectionMode="checkbox" (onNodeSelect)="selectODS($event)"
+              (onNodeUnselect)="unSelectODS($event)"></p-tree>
+          </div>
+
+        </div>
+        <div class="col-12">
+          <hr>
+        </div>
+      </div>
+
+    </div>
+
+    <!--* PRODUCTOS -->
+    <div *ngIf="flagOther" class="col-2-custom"></div>
+
+    <div [ngClass]="{'col-8-custom': flagOther, 'col-9': flagFilter}">
+      <!--! titulo -->
+      <div class="row">
+        <div class="col">
+          <h3 class="display-6 titleproductos tituloPro">
+            Productos Generados en las Direcciones Generales del INEGI.</h3>
+          <hr style="color: #113250;">
+        </div>
+      </div>
+
+
+      <!--! div para ocultar cuando se filtra desde otra pagina -->
+      <div [hidden]="boolFilter_ODS_o_MDEA">
+        <!--! texto -->
+        <div class="row align-items-center">
+
+          <div class="col d-flex">
+            <p class="textointroductivo" style="color: #113250; margin: 5px;  text-align: justify; font-family: Helvetica, Sans-Serif;">
+              En esta sección, explorarás los productos identificados y catalogados por las diversas direcciones generales
+              del Instituto Nacional de Estadística y Geografía (INEGI).
+              Esta colección abarca una amplia gama de temas, desde datos demográficos hasta análisis medioambientales,
+              ofreciendo una visión detallada de diferentes aspectos relevantes
+              para nuestra sociedad.
+
+              Los productos aquí presentados son el resultado de rigurosos procesos de recopilación y análisis de
+              información. Están diseñados para proporcionar datos precisos y confiables
+              que puedan utilizarse para una variedad de propósitos, como investigación, toma de decisiones y análisis de
+              tendencias.
+
+              Al navegar por el sitio, podrás descubrir cómo estas herramientas contribuyen a una comprensión más profunda
+              de nuestro entorno y cómo pueden ser utilizadas para
+              informar y enriquecer el desarrollo de políticas y estrategias en diversos ámbitos.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!--! contadores -->
+        <div class="row pt-2">
+          <!--? ***************************************************************************************** -->
+          <div class="colCustom">
+
+            <!--! icono -->
+            <div class="d-flex justify-content-center align-items-center">
+              <i id="iconoDir" class="bi bi-globe display-5 iconcustom" style="color: #113250;"></i>
+            </div>
+
+            <!--! direccion -->
+            <div class="text-center">
+
+              <label class="texto-direction nameofDirection">Dirección General de Geografía y Medio Ambiente.</label>
+
+              <!--! texto total de productos -->
+              <label class="texto-totalP nameofDirection">Total de productos:</label>
+
+            </div>
+
+            <!--! spin -->
+            <div class="text-center pt-2" *ngIf="loading">
+              <div class="spinner-border spinner-border-sm custom-spinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
+            <!--! numeros -->
+            <div class="text-center">
+              <h3 class="texto-numero" [hidden]="loading">{{ primerDir }}</h3>
+            </div>
+
+          </div>
+          <!--? ***************************************************************************************** -->
+          <div class="colCustom">
+            <!--! icono -->
+            <div class="d-flex justify-content-center align-items-center">
+              <i id="iconoDir" class="bi bi-bar-chart display-5 iconcustom" style="color: #113250;"></i>
+            </div>
+
+            <div class="text-center">
+              <!--! direccion -->
+              <label class="texto-direction nameofDirection">Dirección General de Estadísticas Sociodemográficas.</label>
+              <!--! texto total de productos -->
+              <label class="texto-totalP nameofDirection">Total de productos:</label>
+
+            </div>
+
+            <!--! spin -->
+            <div class="text-center pt-2" *ngIf="loading">
+              <div class="spinner-border spinner-border-sm custom-spinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <!--! numeros -->
+            <div class="text-center">
+              <h3 class="texto-numero" [hidden]="loading">{{ segundaDir }}</h3>
+            </div>
+
+          </div>
+
+          <!--? ***************************************************************************************** -->
+          <div class="colCustom">
+
+            <div class="d-flex justify-content-center align-items-center">
+              <i id="iconoDir" class="bi bi-cash-stack display-5 iconcustom" style="color: #113250;"></i>
+            </div>
+
+            <div class="text-center">
+
+              <label class="texto-direction nameofDirection">Dirección General de Estadísticas Económicas.</label>
+
+              <label class="texto-totalP nameofDirection">Total de productos:</label>
+
+            </div>
+
+            <div class="text-center pt-2" *ngIf="loading">
+              <div class="spinner-border spinner-border-sm custom-spinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <h3 class="texto-numero" [hidden]="loading">
+                {{ terceraDir }}</h3>
+            </div>
+
+          </div>
+          <!--? ***************************************************************************************** -->
+          <div class="colCustom2">
+
+            <div class="d-flex justify-content-center align-items-center">
+              <i id="iconoDir" class="bi bi-bank display-5 iconcustom" style="color: #113250;"></i>
+            </div>
+
+            <div class="text-center">
+
+              <label class="texto-direction nameofDirection">Dirección General de Estadísticas de Gobierno, Seguridad Pública y Justicia.
+              </label>
+
+              <label class="texto-totalP nameofDirection">Total de productos:</label>
+
+            </div>
+
+
+            <div class="text-center pt-2" *ngIf="loading">
+              <div class="spinner-border spinner-border-sm custom-spinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <h3 class="texto-numero" [hidden]="loading">
+                {{ cuartaDir }}</h3>
+            </div>
+
+          </div>
+          <!--? ***************************************************************************************** -->
+          <div class="colCustom2">
+            <div class="d-flex justify-content-center align-items-center">
+              <i id="iconoDir" class="bi bi-file-earmark-text display-5 iconcustom" style="color: #113250;"></i>
+            </div>
+
+            <div class="text-center">
+              <label class="texto-direction nameofDirection">Dirección General de Integración, Análisis e Investigación.</label>
+
+              <label class="texto-totalP nameofDirection">Total de productos: </label>
+            </div>
+
+
+            <div class="text-center pt-2" *ngIf="loading">
+              <div class="spinner-border spinner-border-sm custom-spinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <h3 class="texto-numero" [hidden]="loading">{{ quintaDir }}</h3>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+<!--? ***************************************************************************************** -->
+          <!--! contador de recursos encontrados -->
+          <div class="row align-items-center">
+            <div class="col d-flex align-items-center">
+
+              <button type="button" class="btn btn-outline-dark btn-sm boton_recursos_encontrados"
+                (click)="changeFlagFilter()"><span>Filtrar</span></button>
+
+              <h5 class="card-title placeholder-glow mb-0 ms-2 flex-grow-1" [hidden]="_mdeaTOproducts || !(products.length == 0)">
+                <span class="placeholder whit20"></span>
+              </h5>
+
+              <h5 class="card-title placeholder-glow mb-0 ms-2 flex-grow-1" [hidden]="!_mdeaTOproducts || !(paginatedProductsFilter.length === 0)">
+                <span class="placeholder whit20"></span>
+              </h5>
+
+              <p [hidden]="_mdeaTOproducts || showProductsFiltrados || paginatedProducts.length === 0"  class="texto_RecursoEncontrado">
+                <strong>{{displayedProductCountAll}}&nbsp;</strong> Recursos encontrados
+              </p>
+
+              <p [hidden]="!showProductsFiltrados"  class="texto_RecursoEncontrado">
+                <strong>{{displayedProductCount}}&nbsp;</strong>Recursos encontrados
+              </p>
+            </div>
+          </div>
+
+
+
+
+
+
+          <!--! productos filtrados -->
+        <div style="min-height: 100vh;" [hidden]="!showProductsFiltrados || paginatedProductsFilter.length === 0">
+
+
+            <div *ngFor="let item of paginatedProductsFilter">
+              <div class="card m1rem hover-animate">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+
+                    <i [ngClass]="getIconClass(item.dg_prod)"></i>
+
+                    <div class="grid-container">
+                      <label class="truncate titulodetarjeta" [ngbTooltip]="item.nom_prod"
+                      tooltipClass="custom-tooltip" placement="top" [animation]="true" [openDelay]="200" [closeDelay]="500"
+                      autoClose="true">{{ item.nom_prod }}</label>
+                    </div>
+
+                    <div class="text-end d-flex align-items-center">
+                      <button type="button" class="btn stylebuton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        (click)="openModal(item)">
+                        Más Información
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <small class="titulodeDirecciones">{{getDireccionGeneral(item.dg_prod)}}</small>
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+        <div class="card flex justify-content-center m-3 mt-0" [hidden]="!showProductsFiltrados || paginatedProductsFilter.length === 0">
+
+          <p-paginator (onPageChange)="onPageChangeFilter($event)" [first]="first" [rows]="rows" [totalRecords]="filteredProducts.length"
+            [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+        </div>
+
+
+
+
+        <!--! TODOS los productos -->
+        <div style="min-height: 100vh;" [hidden]="_mdeaTOproducts || showProductsFiltrados || paginatedProducts.length === 0">
+            <div *ngFor="let item of paginatedProducts">
+
+              <div class="card m1rem hover-animate">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+
+                    <i [ngClass]="getIconClass(item.dg_prod)"></i>
+
+                    <div class="grid-container">
+                      <label class="truncate titulodetarjeta" [ngbTooltip]="item.nom_prod"
+                      tooltipClass="custom-tooltip" placement="top" [animation]="true" [openDelay]="200" [closeDelay]="500"
+                      autoClose="true">{{ item.nom_prod }}</label>
+                    </div>
+
+                    <div class="text-end d-flex align-items-center">
+                      <button type="button" class="btn stylebuton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        (click)="openModal(item)">
+                        Más Información
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <small class="titulodeDirecciones">{{getDireccionGeneral(item.dg_prod)}}</small>
+                </div>
+
+              </div>
+            </div>
+
+        </div>
+        <div class="card flex justify-content-center m-3 mt-0" [hidden]="_mdeaTOproducts || showProductsFiltrados || paginatedProducts.length === 0">
+
+          <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="products.length"
+            [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+        </div>
+
+
+
+
+
+
+
+
+      <div  style="margin-bottom: 10vh;" [hidden]="_mdeaTOproducts || !(products.length == 0)">
+
+        <div *ngFor="let card of cardsData">
+          <div class="card m1rem" aria-hidden="true">
+            <div class="row card-body">
+              <div class="col-2">
+                <h5 class="card-title placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </h5>
+              </div>
+              <div class="col">
+                <h5 class="card-title placeholder-glow">
+                  <span class="placeholder whit100"></span>
+                </h5>
+
+              </div>
+              <div class="col-2  text-end d-flex align-items-center">
+                <div class="ms-auto">
+                  <button type="button btn-moreInfo" class="btn vermasinformacionhidden">Más Información</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 10vh;" [hidden]="!_mdeaTOproducts || !(paginatedProductsFilter.length === 0)">
+
+        <div *ngFor="let card of cardsData">
+          <div class="card m1rem" aria-hidden="true">
+            <div class="row card-body">
+              <div class="col-2">
+                <h5 class="card-title placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </h5>
+              </div>
+              <div class="col">
+                <h5 class="card-title placeholder-glow">
+                  <span class="placeholder whit100"></span>
+                </h5>
+
+              </div>
+              <div class="col-2  text-end d-flex align-items-center">
+                <div class="ms-auto">
+                  <button type="button btn-moreInfo" class="btn vermasinformacionhidden">Más Información</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+<!--* MODAL -->
+<div class="modal fade " id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="custom-scroll">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+
+        <div class="modal-header" style="background-color: #113250;">
+          <!--! ICONOS DEL PRODUCTO -->
+          <div class="d-flex align-items-center">
+
+            <i style="color: white;" [ngClass]="getIconClass(elementoSeleccionado?.dg_prod)"></i>
+
+            <div class="grid-container">
+              <label class="truncate titulodetarjeta1" [ngbTooltip]="elementoSeleccionado?.nom_prod" tooltipClass="custom-tooltip" placement="auto"
+                [animation]="true" [openDelay]="200" [closeDelay]="500" autoClose="true">{{ elementoSeleccionado?.nom_prod }}</label>
+            </div>
+
+
+          </div>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!--! BODY MODAL -->
+        <div class="modal-body custom-modal-body">
+          <div class="row">
+            <div class="col">
+              <div>
+                <label>Tipo de producto:
+                  <label class="badge custom-badge">{{ getTipoProd(+elementoSeleccionado?.tipo_prod__1,
+                    +elementoSeleccionado?.tipo_prod__2) }}</label>
+                </label>
+              </div>
+
+            </div>
+            <div class="col">
+              <div>
+                <label>Año de publicación:
+                  <label class="badge custom-badge">{{ elementoSeleccionado?.a_publicacion}}
+                    {{elementoSeleccionado?.a_publicacion2 ? (
+                    ' - ' + elementoSeleccionado?.a_publicacion2): ''}}
+                  </label>
+                </label>
+              </div>
+
+
+            </div>
+            <div class="col">
+              <div><label>Año de referencia:
+                  <label class="badge custom-badge">
+                    {{
+                    elementoSeleccionado?.a_referencia }}{{
+                    elementoSeleccionado?.a_referencia2 ? (
+                    ' - ' + elementoSeleccionado?.a_referencia2) : ''}}
+                  </label>
+                </label></div>
+
+            </div>
+            <div class="container">
+              <hr>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div>
+                <label>Cobertura:
+                  <ng-container *ngFor="let cobertura of getCoberturas(elementoSeleccionado)">
+                    <label class="badge custom-badge" [title]="cobertura" [ngbTooltip]="cobertura">
+                      {{ truncateText(cobertura, 25) }}
+                    </label>
+                  </ng-container>
+                </label>
+              </div>
+            </div>
+
+            <div class="col">
+              <!--! se actualiza -->
+              <div>
+                <label *ngIf="seActualiza(elementoSeleccionado)">
+                  Actualización:
+
+                  <label class="badge custom-badge" [title]="getTituloActualizacion(elementoSeleccionado)">
+                    {{ getTruncatedTextoActualizacion(elementoSeleccionado, 25) }}
+                  </label>
+
+                </label>
+
+                <label *ngIf="elementoSeleccionado?.actualizacion === 2">
+                  Se actualiza:
+
+                  <label class="badge custom-badge">No</label>
+                </label>
+              </div>
+
+
+            </div>
+
+            <div class="col">
+              <div>
+
+                <label>Escala geográfica:&nbsp;</label>
+
+
+                <label class="badge custom-badge" *ngIf="elementoSeleccionado?.escala">
+                  {{ elementoSeleccionado?.escala != 14 ? getEscalasText(elementoSeleccionado?.escala) :
+                  elementoSeleccionado?.o_escala }}
+                </label>
+
+
+
+                <span *ngIf="!elementoSeleccionado?.escala">
+
+                  <label class="badge custom-badge">Ninguna</label>
+                </span>
+
+              </div>
+
+
+            </div>
+
+            <div class="container">
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col">
+              <div>
+                <label>Enlaces de acceso:&nbsp;</label>
+
+                <a (click)="$event.stopPropagation()" target="_blank" [href]="elementoSeleccionado?.liga">
+                  Enlace.
+                </a>
+
+              </div>
+
+            </div>
+            <div class="col">
+              <div>
+
+                <label>Metodología incluida:&nbsp;</label>
+
+                <a *ngIf="elementoSeleccionado?.metodologia == 1" (click)="$event.stopPropagation()"
+                  [href]="elementoSeleccionado?.liga_metodologia" target="_blank">
+                  Enlace.
+                </a>
+
+                <label class="badge custom-badge" *ngIf="elementoSeleccionado?.metodologia == 2">No</label>
+
+              </div>
+            </div>
+
+      <!-- Enlace geografico -->
+      <div class="col">
+        <ng-container *ngIf="esGeograficoOEstadistico(); else enlaceTemplate">
+        </ng-container>
+        <ng-template #enlaceTemplate>
+          <span>Enlace de referencia Geográfico: </span>
+          <a *ngIf="elementoSeleccionado?.liga_geonode !== 'Sin resultado'; else noDisponible"
+             [href]="elementoSeleccionado?.liga_geonode"
+             target="_blank">
+            {{ elementoSeleccionado?.tipo_prod__1 == 1 && elementoSeleccionado?.tipo_prod__2 == 0 ? 'Enlace.' : '' }}
+            {{ elementoSeleccionado?.tipo_prod__1 == 0 && elementoSeleccionado?.tipo_prod__2 == 1 ? '' : '' }}
+            {{ elementoSeleccionado?.tipo_prod__1 == 1 && elementoSeleccionado?.tipo_prod__2 == 1 ? '' : '' }}
+          </a>
+          <ng-template #noDisponible>
+            <label class="badge custom-badge">No disponible</label>
+          </ng-template>
+        </ng-template>
+      </div>
+
+
+            <div class="container">
+              <hr>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div><label>Fragmentación del producto:
+                  <label class="badge custom-badge">{{ getFragmentacionText(elementoSeleccionado) }}</label>
+
+                  <div *ngIf="isFragmentado(elementoSeleccionado)">
+                    <div class="col-12">
+                      <label>Número de fragmentos: </label>
+                      <label class="badge custom-badge marlef">
+                        {{ elementoSeleccionado?.n_fragmenta }}
+                      </label>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col">
+              <div>
+                <label>Soporte del producto:&nbsp;</label>
+
+                <label *ngIf="elementoSeleccionado?.tipo_soporte__1 == 1" class="badge custom-badge">Datos Geográficos</label>
+
+                <label *ngIf="elementoSeleccionado?.tipo_soporte__2 == 1" class="badge custom-badge">Tabulado</label>
+
+                <label *ngIf="elementoSeleccionado?.tipo_soporte__3 == 1" class="badge custom-badge">Publicaciones</label>
+
+                <label *ngIf="elementoSeleccionado?.tipo_soporte__4 == 1"
+                  class="badge custom-badge">{{elementoSeleccionado?.o_soporte}}</label>
+
+              </div>
+            </div>
+
+            <div class="col">
+
+
+
+
+
+
+
+              <div
+                *ngIf="elementoSeleccionado?.formato_geo__1 == 1 || elementoSeleccionado?.formato_geo__2 == 1 || elementoSeleccionado?.formato_geo__3 == 1 || elementoSeleccionado?.formato_geo__4 == 1 || elementoSeleccionado?.formato_geo__5 == 1">
+                <label>Formato del datos geográfico:
+                  <label class="badge custom-badge">{{ elementoSeleccionado?.formato_geo__1 == 1 ? 'Shapefile' : '' }}</label>
+
+                  <label class="badge custom-badge">{{ elementoSeleccionado?.formato_geo__2 == 1 ? 'Raster (TIIF, GIF, BIL, etc.)' : ''
+                    }}</label>
+
+                  <label class="badge custom-badge">{{elementoSeleccionado?.formato_geo__3 == 1 ? 'GeoPDF' : ''}}</label>
+
+                  <label class="badge custom-badge">{{elementoSeleccionado?.formato_geo__4 == 1 ? 'PDF' : ''}}</label>
+
+                  <label class="badge custom-badge">{{elementoSeleccionado?.formato_geo__5 == 1 ? elementoSeleccionado?.o_formato_geo : ''}}</label>
+
+                </label>
+              </div>
+
+              <div
+                *ngIf="elementoSeleccionado?.formato_tab__1 == 1 || elementoSeleccionado?.formato_tab__2 == 1 || elementoSeleccionado?.formato_tab__3 == 1 || elementoSeleccionado?.formato_tab__4 == 1 || elementoSeleccionado?.formato_tab__5 == 1">
+                <label>Formato del tabulado:
+
+                  <label class="badge custom-badge">{{ elementoSeleccionado?.formato_tab__1 == 1 ? '.dbf' : '' }}</label>
+
+                  <label class="badge custom-badge">{{elementoSeleccionado?.formato_tab__2 == 1 ? '.csv' : ''}}</label>
+
+                  <label class="badge custom-badge">{{elementoSeleccionado?.formato_tab__3 == 1 ? '.txt' : ''}}</label>
+
+                  <label class="badge custom-badge">{{elementoSeleccionado?.formato_tab__4 == 1 ? '.xlsx' : ''}}</label>
+
+                  <label class="badge custom-badge">{{elementoSeleccionado?.formato_tab__5 == 1 ? elementoSeleccionado?.o_formato_tab : ''}}</label>
+
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-12">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="nav-variable-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-variable" type="button" role="tab" aria-controls="nav-variable"
+                    aria-selected="true" style="color: #113250; font-family: Helvetica, Sans-Serif;">Variables</button>
+
+                  <button class="nav-link" id="nav-pi-tab" data-bs-toggle="tab" data-bs-target="#nav-pi" type="button"
+                    role="tab" aria-controls="nav-pi" aria-selected="false"
+                    style="color: #113250; font-family: Helvetica, Sans-Serif;">Programas de
+                    Información</button>
+
+                  <button class="nav-link" id="nav-aeg-tab" data-bs-toggle="tab" data-bs-target="#nav-aeg" type="button"
+                    role="tab" aria-controls="nav-aeg" aria-selected="false"
+                    style="color: #113250; font-family: Helvetica, Sans-Serif;">Actividades
+                    Estadísticas o
+                    Geográficas</button>
+
+                  <button class="nav-link" id="nav-mdea-tab" data-bs-toggle="tab" data-bs-target="#nav-mdea"
+                    type="button" role="tab" aria-controls="nav-mdea" aria-selected="false"
+                    style="color: #113250; font-family: Helvetica, Sans-Serif;">MDEA</button>
+
+                  <button class="nav-link" id="nav-ods-tab" data-bs-toggle="tab" data-bs-target="#nav-ods" type="button"
+                    role="tab" aria-controls="nav-ods" aria-selected="false"
+                    style="color: #113250; font-family: Helvetica, Sans-Serif;">ODS</button>
+
+                  <button class="nav-link" id="nav-ps-tab" data-bs-toggle="tab" data-bs-target="#nav-ps" type="button"
+                    role="tab" aria-controls="nav-ps" aria-selected="false"
+                    style="color: #113250; font-family: Helvetica, Sans-Serif;">Programas
+                    Sectoriales</button>
+                </div>
+              </nav>
+
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-variable" role="tabpanel"
+                  aria-labelledby="nav-variable-tab" tabindex="0">
+                  <!--! variables -->
+                  <div class="row">
+                    <div class="col">
+                      <ng-container *ngIf="secuenciaVAR && secuenciaVAR.length > 0; else nosecuenciaVAR">
+                        <div class="pt-2 m-2">
+                          <div class=" card-body" (click)="$event.stopPropagation()">
+                            <div class="row">
+                              <div class="col-md-4 col-12" *ngFor="let item of secuenciaVAR">
+                                <div class="shadow-sm p-1 mt-2 mb-0 bg-body-tertiary rounded">
+                                  <h6 style="color: #113250; text-align: center; font-family: Helvetica, Sans-Serif;">
+                                    {{item.nom_var | uppercase}}</h6>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-template #nosecuenciaVAR>
+                        <div class="text-center shadow-sm p-1 mt-2 mb-0 bg-body-tertiary rounded">
+                          <h5 style="color: #113250; font-family: Helvetica, Sans-Serif;">Ninguna Variable Detectada.
+                          </h5>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="nav-pi" role="tabpanel" aria-labelledby="nav-pi-tab" tabindex="0">
+                  <!--! programas de información -->
+                  <div class="row">
+                    <div class="col">
+                      <ng-container *ngIf="pi && pi.length > 0; else noPi">
+                        <div class="pt-2 m-2">
+                          <div class="row" *ngFor="let item of pi">
+                            <div class="col">
+                              <div class=" card-body">
+                                <div class="row">
+                                  <div class="col-md-12 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Unidad
+                                      Administrativa Responsable:</strong>
+                                    <span> {{getDireccionGeneralText(item.dg_pi)}}.</span>
+                                  </div>
+                                  <div class="col-md-12 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Programa de
+                                      Información:</strong>
+                                    <span> {{getProgInfoText(item.nom_pi)}}.</span>
+                                  </div>
+                                  <div class="col-md-12 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Proceso de
+                                      Producción:</strong>
+                                    <span> {{getDga_PprodText(item.pp_pi)}}.</span>
+                                    <hr class="mt-2">
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-template #noPi>
+                        <div class="text-center shadow-sm p-2 mt-2 m-1 mb-0 bg-body-tertiary rounded">
+                          <h5 style="color: #113250; font-family: Helvetica, Sans-Serif;">Ningún Programa de Información
+                            Detectado.</h5>
+                        </div>
+                      </ng-template>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-aeg" role="tabpanel" aria-labelledby="nav-aeg-tab" tabindex="0">
+                  <!--! Actividades Estadísticas o Geográficas -->
+
+                  <div class="row">
+                    <div class="col">
+                      <ng-container *ngIf="aegSecuencia && aegSecuencia.length > 0; else noaegSecuencia">
+                        <div class="pt-2 m-2">
+                          <div class="row" *ngFor="let item of aegSecuencia">
+                            <div class="col">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-md-12 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Dirección
+                                      General Responsable: </strong>
+                                    <span> {{getDga_PprodText(item.dg_aeg)}}.</span>
+                                  </div>
+                                  <div class="col-md-12 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Actividad
+                                      Estadística o Geográfica: </strong>
+                                    <span> {{getAEG_2Text(item.nom_aeg)}}.</span>
+                                  </div>
+                                  <div class="col-md-12 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Dirección
+                                      General Adjunta Responsable : </strong>
+                                    <span> {{getAEG_ProdText(item.dga_aeg)}}.</span>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-template #noaegSecuencia>
+                        <div class="text-center shadow-sm p-2 mt-3 m-1 mb-0 bg-body-tertiary rounded">
+                          <h5 style="color: #113250; font-family: Helvetica, Sans-Serif;">Ninguna Actividad Estadística
+                            o Geográfica Detectada.</h5>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-mdea" role="tabpanel" aria-labelledby="nav-mdea-tab" tabindex="0">
+                  <!--! Marco para el Desarrollo de las Estadísticas Ambientales -->
+                  <div class="row">
+                    <div class="col">
+                      <ng-container *ngIf="mdeas && mdeas.length > 0; else nomdeas">
+                        <div class="pt-2 m-2  bg-body-tertiary rounded">
+                          <h4 style="color: #113250; padding-left: 0.5rem; font-family: Helvetica, Sans-Serif;">Relación
+                            con el Marco para el Desarrollo de
+                            las Estadísticas Ambientales:
+                          </h4>
+                          <div class="row" *ngFor="let item of mdeas">
+                            <div class="col">
+                              <div class="card card-body m-2 mb-2">
+                                <div class="row">
+                                  <div class="col-md-4 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Componente:
+                                    </strong>
+                                    <br>
+                                    <span> {{getComponenteText(item.comp_mdea)}}.</span>
+                                  </div>
+                                  <div class="col-md-4 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Subcomponente:
+                                    </strong>
+                                    <br>
+                                    <span> {{getSubcomponenteText(item.subcomp_mdea)}}.</span>
+                                  </div>
+                                  <div class="col-md-4 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Tópico:
+                                    </strong>
+                                    <br>
+                                    <span> {{getTopicoText(item.topico_mdea)}}.</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-template #nomdeas>
+                        <div class="text-center shadow-sm p-2 mt-3 m-1 mb-0 bg-body-tertiary rounded">
+                          <h5 style="color: #113250; font-family: Helvetica, Sans-Serif;">Ninguna Relación con el Marco
+                            para el Desarrollo de las
+                            Estadísticas Ambientales.
+                          </h5>
+                        </div>
+                      </ng-template>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-ods" role="tabpanel" aria-labelledby="nav-ods-tab" tabindex="0">
+                  <!--! Relación con los Objetivos del Desarrollo Sostenible -->
+                  <div class="row">
+                    <div class="col">
+                      <ng-container *ngIf="ODSes && ODSes.length > 0; else noODSes">
+                        <div class="pt-2 m-2 bg-body-tertiary rounded">
+                          <h4 style="color: #113250; padding-left: 0.5rem; font-family: Helvetica, Sans-Serif;">Relación
+                            con Objetivos del Desarrollo
+                            Sostenible:</h4>
+                          <div class="row" *ngFor="let item of ODSes">
+                            <div class="col">
+                              <div class="card card-body m-2 mb-2">
+                                <div class="row">
+                                  <div class="col-md-6 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Objetivo:
+                                    </strong>
+                                    <br>
+                                    <span class=""> {{getObjetivODSText(item.obj_ods) | slice:3}}.</span>
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Meta: </strong>
+                                    <br>
+                                    <span> {{getMetaODSText(item.meta_ods)}}.</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-template #noODSes>
+                        <div class="text-center shadow-sm p-2 mt-3 m-1 mb-0 bg-body-tertiary rounded">
+                          <h5 style="color: #113250; font-family: Helvetica, Sans-Serif;">Ninguna Relación con Objetivos
+                            del Desarrollo Sostenible.</h5>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-ps" role="tabpanel" aria-labelledby="nav-ps-tab" tabindex="0">
+                  <!--! Relación con algún Programa Sectorial (PS): -->
+                  <div class="row mb-2">
+                    <div class="col">
+                      <ng-container *ngIf="PSes && PSes.length > 0; else noPSes">
+                        <div class="pt-2 m-2 bg-body-tertiary rounded">
+                          <h4 style="color: #113250; padding-left: 0.5rem; font-family: Helvetica, Sans-Serif;">Relación
+                            con Programas Sectoriales:</h4>
+                          <div class="row" *ngFor="let item of PSes">
+                            <div class="col">
+                              <div class="card card-body m-2 mb-2">
+                                <div class="row">
+                                  <div class="col-md-6 col-12">
+                                    <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Programa
+                                      Sectorial: </strong>
+                                    <br>
+                                    <span>{{getps2023Text(item.prog_ps)}}.</span>
+
+
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                    <div *ngIf="item.indicador_ps">
+                                      <strong style="color: #113250; font-family: Helvetica, Sans-Serif;">Indicador que
+                                        corresponde: </strong>
+                                      <br>
+                                      <span> {{getIndicadoresPS2023Text(item.indicador_ps)}}.</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-template #noPSes>
+                        <div class="text-center shadow-sm p-2 mt-3 m-1 mb-0 bg-body-tertiary rounded">
+                          <h5 style="color: #113250; font-family: Helvetica, Sans-Serif;">Ninguna relación con algún
+                            Programa Sectorial.</h5>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <span style="color: #113250; font-family: Helvetica, Sans-Serif;">
+            {{ elementoSeleccionado?.dg_prod == 1 ? 'Dirección General de Geografía y Medio Ambiente':(
+            elementoSeleccionado?.dg_prod == 2 ? 'Dirección General de Estadísticas Sociodemográficas': (
+            elementoSeleccionado?.dg_prod == 3 ? 'Dirección General de Estadísticas Económicas': (
+            elementoSeleccionado?.dg_prod == 4 ? 'Dirección General de Estadísticas de Gobierno, Seguridad Pública y Justicia':(
+            elementoSeleccionado?.dg_prod == 5 ? 'Dirección General de Integración, Análisis e Investigación':''
+            )
+            )
+            )
+            )
+            }}.
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
